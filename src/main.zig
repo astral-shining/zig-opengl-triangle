@@ -51,11 +51,6 @@ pub fn main() !void {
          0.0,  0.5, 0.0  // top   
     };
 
-    // We create a vao so we can save the attrib or vbo actions
-    const vao = zgl.VertexArray.gen();
-    defer vao.delete();
-    vao.bind();
-
     // Create buffer and submit the data
     const vbo = zgl.Buffer.gen();
     defer vbo.delete();
@@ -63,13 +58,18 @@ pub fn main() !void {
     zgl.bindBuffer(vbo, .array_buffer);
     zgl.bufferData(.array_buffer, f32, &vertices, .static_draw);
 
+    // We create a vao so we can save the attrib or vbo actions
+    const vao = zgl.VertexArray.gen();
+    defer vao.delete();
+    vao.bind();
+
     // Now we create a vao so we can record the attribs here
-    vao.attribFormat(0, 3, .float, false, 0);
+    zgl.vertexAttribPointer(0, 3, .float, false, 0, 0);
     zgl.enableVertexAttribArray(0);
     
     zgl.bindVertexArray(@intToEnum(zgl.VertexArray, 0));
-    
-    // We prepare everything, we're going to render our triangle
+
+    // Now we prepare everything, we going to render the triangle
     program.use();
     vao.bind();
 
@@ -81,6 +81,7 @@ pub fn main() !void {
             //.depth = true
         });
 
+        // We draw the triangle here
         zgl.drawArrays(.triangles, 0, 3);
         
         try window.swapBuffers();
