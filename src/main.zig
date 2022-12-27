@@ -84,8 +84,8 @@ pub fn main() !void {
         // We draw the triangle here
         zgl.drawArrays(.triangles, 0, 3);
         
-        try window.swapBuffers();
-        try glfw.pollEvents();
+        window.swapBuffers() catch unreachable;
+        glfw.pollEvents() catch unreachable;
     }
 
 }

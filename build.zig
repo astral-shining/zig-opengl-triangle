@@ -25,9 +25,10 @@ pub fn build(b: *std.build.Builder) !void {
     exe.setBuildMode(mode);
     exe.addPackage(glfw.pkg);
     exe.addPackage(pkgs.zgl);
-    //b.addSharedLibrary("x11", null, .unversioned);
+    exe.single_threaded = true;
+
     if (mode != .Debug) {
-        exe.strip = true;
+        //exe.strip = true;
     }
     
     try glfw.link(b, exe, .{
