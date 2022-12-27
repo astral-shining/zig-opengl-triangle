@@ -28,7 +28,7 @@ pub fn build(b: *std.build.Builder) !void {
     exe.single_threaded = true;
 
     if (mode != .Debug) {
-        //exe.strip = true;
+        exe.strip = true;
     }
     
     try glfw.link(b, exe, .{

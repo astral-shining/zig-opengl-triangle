@@ -46,9 +46,9 @@ pub fn main() !void {
 
     // Triangle vertices
     const vertices = [_] f32 {
-        -0.5, -0.5, 0.0, // left  
-         0.5, -0.5, 0.0, // right 
-         0.0,  0.5, 0.0  // top   
+        -0.5, -0.5, 0.0,  1.0, 0.0, 0.0, // left  
+         0.5, -0.5, 0.0,  0.0, 1.0, 0.0, // right 
+         0.0,  0.5, 0.0,  0.0, 0.0, 1.0  // top   
     };
 
     // Create buffer and submit the data
@@ -64,8 +64,10 @@ pub fn main() !void {
     vao.bind();
 
     // Now we create a vao so we can record the attribs here
-    zgl.vertexAttribPointer(0, 3, .float, false, 0, 0);
+    zgl.vertexAttribPointer(0, 3, .float, false, @sizeOf(f32)*6, 0);
+    zgl.vertexAttribPointer(1, 3, .float, false, @sizeOf(f32)*6, @sizeOf(f32)*3);
     zgl.enableVertexAttribArray(0);
+    zgl.enableVertexAttribArray(1);
     
     zgl.bindVertexArray(@intToEnum(zgl.VertexArray, 0));
 
